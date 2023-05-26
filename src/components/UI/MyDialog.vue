@@ -10,10 +10,6 @@
               type="text"
               placeholder="Title"
           />
-<!--          <textarea class="textarea"-->
-<!--                    v-model="todo.completed"-->
-<!--                    type="text"-->
-<!--                    placeholder="Description"/>-->
           <MyButton class="dialog__btn"
                     @click="createTodo"
                     style="align-self: center; margin-top: 15px"
@@ -30,6 +26,7 @@
 <script>
 import MyInput from "@/components/UI/MyInput.vue";
 import MyButton from "@/components/UI/MyButton.vue";
+import {mapState} from "vuex";
 
 export default {
   name: 'my-dialog',
@@ -43,6 +40,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      todoId: (state) => state.todo.id,
+      todoCompleted: (state) => state.todo.completed,
+    }),
+  },
   props: {
     show: {
       type: Boolean,
@@ -54,7 +57,8 @@ export default {
       this.$emit("close")
     },
     createTodo() {
-      //this.todo.id = Date.now();
+      this.todo.id = this.todoId;
+      this.todo.completed = this.todoCompleted;
       this.$emit('create', this.todo)
       this.todo = {
         title: '',
@@ -122,25 +126,6 @@ form {
   font-weight: 600;
   color: rgb(33, 33, 33);
   margin: 0 0 32px;
-}
-
-.textarea {
-  width: 100%;
-  min-height: 175px;
-  max-width: 400px;
-  font-size: 16px;
-  line-height: 19px;
-  padding: 14px 16px;
-  background: rgb(243, 244, 245);
-  border-radius: 8px;
-  border: 1px solid rgb(243, 244, 245);
-  font-family: Inter, sans-serif;
-  color: rgb(33, 33, 33);
-  outline: none;
-  margin: 50px 0 0;
-  font-weight: 400;
-  overflow: visible;
-
 }
 
 .dialog__btn {

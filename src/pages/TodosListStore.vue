@@ -19,6 +19,7 @@
     <TodoList
         :todos="sortedAndSearchedTodos"
         @remove="removeTodo"
+        @toggle="toggleTodo"
         v-if="!isTodosLoading"
     />
     <div v-else style="align-self: center; font-size: 25px">Loading in progress...</div>
@@ -40,6 +41,7 @@ export default {
       setPage: 'todo/setPage',
       setSearchQuery: 'todo/setSearchQuery',
       removeTodo: "todo/removeTodo",
+      toggleTodo: "todo/toggleTodo"
     }),
     ...mapActions({
       loadMoreTodos: 'todo/loadMoreTodos',

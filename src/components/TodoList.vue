@@ -8,6 +8,7 @@
           v-for="todo in todos"
           :todo="todo"
           :key="todo.id"
+          @toggle="$emit('toggle', todo)"
           @remove="$emit('remove', todo)"
       />
     </transition-group>
@@ -27,7 +28,7 @@ export default {
       type: Array,
       required: true
     }
-  }
+  },
 }
 </script>
 

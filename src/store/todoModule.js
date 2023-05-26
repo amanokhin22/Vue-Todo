@@ -6,9 +6,6 @@ export const todoModule = {
         isTodosLoading: false,
         searchQuery: "",
         selectedSort: "",
-        page: 1,
-        limit: 10,
-        totalPages: 0,
 
     }),
     getters: {
@@ -38,6 +35,12 @@ export const todoModule = {
         removeTodo(state, todo) {
             state.todos = state.todos.filter(t => t.id !== todo.id)
         },
+        toggleTodo(state, todo) {
+            const todoItem = state.todos.find(t => t.id === todo.id)
+            if (todoItem) {
+                todoItem.completed = !todoItem.completed
+            }
+        },
         addTodo(state, todo) {
             state.todos.push(todo);
         },
@@ -46,7 +49,7 @@ export const todoModule = {
         async fetchTodos({state, commit}) {
             try {
                 commit('setLoading', true);
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos', {});
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20', {});
                 commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit))
                 commit('setTodos', response.data)
             } catch (e) {
@@ -58,7 +61,7 @@ export const todoModule = {
         async loadMoreTodos({state, commit}) {
             try {
                 commit('setPage', state.page + 1)
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos', {});
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20', {});
                 commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit))
                 commit('setTodos', [...state.todos, ...response.data]);
             } catch (e) {
