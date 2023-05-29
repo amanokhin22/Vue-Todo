@@ -1,0 +1,64 @@
+{
+  "todos": [
+    {
+      "title": "Vita sine libertate, nihil — Жизнь без свободы — ничто",
+      "id": 24,
+      "completed": false
+    },
+    {
+      "title": "Omnis homo mendax — Каждый человек — лжец",
+      "id": 25,
+      "completed": false
+    },
+    {
+      "title": "Unus pro omnibus, omnes pro uno — Один за всех, все за одного",
+      "id": 26,
+      "completed": false
+    },
+    {
+      "title": "Abyssus abyssum invocat — Бездна взывает к бездне",
+      "id": 27,
+      "completed": true
+    },
+    {
+      "title": "Abusus non tollit usum — Злоупотребление не отменяет употребления",
+      "id": 28,
+      "completed": true
+    },
+    {
+      "title": "Abusus non tollit usum — Злоупотребление не отменяет употребления",
+      "id": 29,
+      "completed": true
+    },
+    {
+      "title": "Abusus non tollit usum — Злоупотребление не отменяет употребления",
+      "id": 30,
+      "completed": true
+    },
+    {
+      "title": "Abyssus abyssum invocat — Бездна взывает к бездне",
+      "id": 31,
+      "completed": true
+    },
+    {
+      "title": "quo laboriosam deleniti aut qui",
+      "id": 32,
+      "completed": true
+    },
+    {
+      "title": "Abyssus abyssum invocat — Бездна взывает к бездне",
+      "id": 33,
+      "completed": true
+    },
+    {
+      "title": "Homo homini lupus est — Человек человеку волк",
+      "id": 37,
+      "completed": true
+    },
+    {
+      "title": "Homo sum, humani nihil a me alienum puto — Я человек, ничто человеческое мне не чуждо",
+      "id": 38,
+      "completed": true
+    }
+  ]
+}

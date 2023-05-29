@@ -25,7 +25,7 @@
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
 import MyDialog from "@/components/UI/MyDialog.vue";
-import {mapMutations, mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   components: {MyDialog, MyButton},
@@ -34,12 +34,14 @@ export default {
     ...mapMutations({
       showModal: "addTodoModal/showModal",
       hideModal: "addTodoModal/hideModal",
-      addTodo: "todo/addTodo",
     }),
     createTodo(todo) {
       this.addTodo(todo);
       this.hideModal();
-    }
+    },
+    ...mapActions({
+      addTodo: 'todo/create'
+    }),
   },
   computed: {
     ...mapState({

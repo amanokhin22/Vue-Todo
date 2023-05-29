@@ -1,6 +1,6 @@
 <template>
   <div class="todo">
-    <div style="display: flex; gap: 10px ">
+    <div style="display: flex; gap: 10px; margin-right: 10px ">
       <div> {{ todo.id }})</div>
       <label class="switch">
         <input
@@ -15,6 +15,12 @@
       <div>{{ todo.title }}</div>
     </div>
     <div class="todo__btns">
+      <MyButton
+          class="editBtn"
+          @click="$emit('edit', todo)"
+      >
+        Edit
+      </MyButton>
       <MyButton
           class="deleteBtn"
           @click="$emit('remove', todo)"
@@ -54,6 +60,13 @@ export default {
 
 .todo__btns {
   display: flex;
+  gap: 5px;
+}
+.editBtn {
+  min-width: 68.54px;
+}
+.editBtn:hover {
+  background-color: green;
 }
 
 .deleteBtn {
@@ -63,6 +76,7 @@ export default {
 .deleteBtn:hover {
   background-color: red;
 }
+
 
 .switch {
   position: relative;

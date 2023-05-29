@@ -14,12 +14,12 @@
         placeholder="Search..."
     />
     <div class="app__btns">
-
     </div>
     <TodoList
         :todos="sortedAndSearchedTodos"
         @remove="removeTodo"
         @toggle="toggleTodo"
+        @edit="editTodo"
         v-if="!isTodosLoading"
     />
     <div v-else style="align-self: center; font-size: 25px">Loading in progress...</div>
@@ -40,12 +40,12 @@ export default {
     ...mapMutations({
       setPage: 'todo/setPage',
       setSearchQuery: 'todo/setSearchQuery',
-      removeTodo: "todo/removeTodo",
-      toggleTodo: "todo/toggleTodo"
     }),
     ...mapActions({
-      loadMoreTodos: 'todo/loadMoreTodos',
-      fetchTodos: 'todo/fetchTodos'
+      fetchTodos: 'todo/fetchTodos',
+      removeTodo: 'todo/delete',
+      toggleTodo: 'todo/toggle',
+      editTodo: 'todo/edit'
     }),
   },
   mounted() {

@@ -10,6 +10,7 @@
           :key="todo.id"
           @toggle="$emit('toggle', todo)"
           @remove="$emit('remove', todo)"
+          @edit="$emit('edit', todo)"
       />
     </transition-group>
   </div>

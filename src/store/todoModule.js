@@ -1,12 +1,14 @@
 import axios from "axios";
 
+const axiosInstance = axios.create({
+    baseURL: `http://localhost:5174/todos`,
+});
 export const todoModule = {
     state: () => ({
         todos: [],
         isTodosLoading: false,
         searchQuery: "",
         selectedSort: "",
-
     }),
     getters: {
         sortedTodos(state) {
@@ -26,9 +28,6 @@ export const todoModule = {
         setPage(state, page) {
             state.page = page
         },
-        setTotalPages(state, totalPages) {
-            state.totalPages = totalPages
-        },
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },
@@ -46,28 +45,35 @@ export const todoModule = {
         },
     },
     actions: {
-        async fetchTodos({state, commit}) {
+
+        async fetchTodos({commit}) {
             try {
                 commit('setLoading', true);
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20', {});
-                commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit))
+                const response = await axiosInstance.get(``, {});
                 commit('setTodos', response.data)
             } catch (e) {
                 console.log(e)
-            } finally {
+            }
+            finally {
                 commit('setLoading', false);
             }
         },
-        async loadMoreTodos({state, commit}) {
-            try {
-                commit('setPage', state.page + 1)
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=20', {});
-                commit('setTotalPages', Math.ceil(response.headers['x-total-count'] / state.limit))
-                commit('setTodos', [...state.todos, ...response.data]);
-            } catch (e) {
-                console.log(e)
-            }
-        }
-    },
+        async create({dispatch}, todo) {
+            await axiosInstance.post(``, {title: todo.title, completed: false});
+            await dispatch('fetchTodos')
+        },
+        async delete({dispatch}, todo) {
+            await axiosInstance.delete(`/${todo.id}`);
+            await dispatch('fetchTodos')
+        },
+        async toggle({dispatch}, todo) {
+            await axiosInstance.patch(`/${todo.id}`, {completed: !todo.completed});
+            await dispatch('fetchTodos')
+        },
+        async edit({dispatch}, todo) {
+            await axiosInstance.put(`/${todo.id}`, {title: !todo.title});
+            await dispatch('fetchTodos')
+        },
+     },
     namespaced: true
 }
