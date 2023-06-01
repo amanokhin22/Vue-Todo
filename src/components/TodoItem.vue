@@ -7,7 +7,6 @@
             type="checkbox"
             :checked="todo.completed"
             @change="$emit('toggle')"
-
         />
         <span class="slider"></span>
       </label>
@@ -16,11 +15,12 @@
     </div>
     <div class="todo__btns">
       <MyButton
+          @click="showEditModal(todo)"
           class="editBtn"
-          @click="$emit('edit', todo)"
       >
         Edit
       </MyButton>
+
       <MyButton
           class="deleteBtn"
           @click="$emit('remove', todo)"
@@ -33,9 +33,16 @@
 
 <script>
 import MyButton from "@/components/UI/MyButton.vue";
+import {mapMutations} from "vuex";
 
 export default {
   components: {MyButton},
+
+  methods: {
+    ...mapMutations({
+      showEditModal: "editModalStore/showEditModal",
+    }),
+  },
   props: {
     todo: {
       type: Object,
@@ -43,6 +50,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>
@@ -62,9 +70,11 @@ export default {
   display: flex;
   gap: 5px;
 }
+
 .editBtn {
   min-width: 68.54px;
 }
+
 .editBtn:hover {
   background-color: green;
 }
@@ -76,7 +86,6 @@ export default {
 .deleteBtn:hover {
   background-color: red;
 }
-
 
 .switch {
   position: relative;

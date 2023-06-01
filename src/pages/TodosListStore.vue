@@ -19,10 +19,15 @@
         :todos="sortedAndSearchedTodos"
         @remove="removeTodo"
         @toggle="toggleTodo"
-        @edit="editTodo"
         v-if="!isTodosLoading"
     />
     <div v-else style="align-self: center; font-size: 25px">Loading in progress...</div>
+    <EditModal
+        v-if="showEdit"
+        :todo="setEditTodo"
+        @update="updateTodo"
+        @close="hideEditModal"
+    ></EditModal>
   </div>
 </template>
 
@@ -30,9 +35,11 @@
 import TodoList from "@/components/TodoList.vue";
 import MyInput from "@/components/UI/MyInput.vue";
 import {mapState, mapMutations, mapActions, mapGetters} from "vuex";
+import EditModal from "@/components/UI/EditModal.vue";
 
 export default {
   components: {
+    EditModal,
     MyInput,
     TodoList,
   },
@@ -40,13 +47,18 @@ export default {
     ...mapMutations({
       setPage: 'todo/setPage',
       setSearchQuery: 'todo/setSearchQuery',
+      hideEditModal: "editModalStore/hideEditModal",
     }),
     ...mapActions({
       fetchTodos: 'todo/fetchTodos',
       removeTodo: 'todo/delete',
       toggleTodo: 'todo/toggle',
-      editTodo: 'todo/edit'
+      editTitleTodo: 'todo/updateTitle'
     }),
+    updateTodo(todo) {
+      this.editTitleTodo(todo)
+      this.hideEditModal();
+    }
   },
   mounted() {
     this.fetchTodos();
@@ -59,6 +71,8 @@ export default {
       page: state => state.todo.page,
       limit: state => state.todo.limit,
       totalPages: state => state.todo.totalPages,
+      showEdit: state => state.editModalStore.show,
+      setEditTodo: state => state.editModalStore.todo,
     }),
     ...mapGetters({
       sortedTodos: 'todo/sortedTodos',

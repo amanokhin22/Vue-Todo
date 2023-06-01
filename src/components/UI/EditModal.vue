@@ -1,20 +1,20 @@
 <template>
-  <div class="wrapper" v-if="show" @click.stop="hideModal">
+  <div class="wrapper" @click.stop="hideEditModal">
     <div class="dialog">
       <div @click.stop class="dialog_content">
         <form @submit.prevent>
           <h4 class="create__title"
-          >Create TODO</h4>
+          >EDIT TODO</h4>
           <MyInput
-              v-model="todo.title"
+              v-model="title"
               type="text"
-              placeholder="Title"
           />
-          <MyButton class="dialog__btn"
-                    @click="createTodo"
-                    style="align-self: center; margin-top: 15px"
+          <MyButton
+              class="dialog__btn"
+              @click="updateTodo"
+              style="align-self: center; margin-top: 15px"
           >
-            Create
+            Update
           </MyButton>
         </form>
         <slot></slot>
@@ -26,47 +26,29 @@
 <script>
 import MyInput from "@/components/UI/MyInput.vue";
 import MyButton from "@/components/UI/MyButton.vue";
-import {mapState} from "vuex";
 
 export default {
-  name: 'my-dialog',
+  name: 'edit-modal',
   components: {MyButton, MyInput},
   data() {
     return {
-      todo: {
-        title: '',
-        completed: Boolean,
-        id: Number
-      }
+      title: this.todo.title
     }
   },
-  computed: {
-    ...mapState({
-      todoId: (state) => state.todo.id,
-      todoCompleted: (state) => state.todo.completed,
-    }),
-  },
   props: {
-    show: {
-      type: Boolean,
-      default: false
+    todo: {
+      title: "",
+      id: null
     }
   },
   methods: {
-    hideModal() {
+    hideEditModal() {
       this.$emit("close")
     },
-    createTodo() {
-      this.todo.id = this.todoId;
-      this.todo.completed = this.todoCompleted;
-      this.$emit('create', this.todo)
-      this.todo = {
-        title: '',
-        completed: Boolean,
-        id: Number
-      }
+    updateTodo() {
+      this.$emit("update", {title: this.title, id: this.todo.id});
     }
-  }
+  },
 }
 </script>
 

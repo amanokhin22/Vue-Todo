@@ -1,6 +1,6 @@
 export const addModal = {
     state: () => ({
-        show: false
+        show: false,
     }),
 
     mutations: {

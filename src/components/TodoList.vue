@@ -3,16 +3,13 @@
       v-if="todos?.length  > 0"
   >
     <h3>List of todos</h3>
-    <transition-group name="todos-list">
-      <TodoItem
-          v-for="todo in todos"
-          :todo="todo"
-          :key="todo.id"
-          @toggle="$emit('toggle', todo)"
-          @remove="$emit('remove', todo)"
-          @edit="$emit('edit', todo)"
-      />
-    </transition-group>
+    <TodoItem
+        v-for="todo in todos"
+        :todo="todo"
+        :key="todo.id"
+        @toggle="$emit('toggle', todo)"
+        @remove="$emit('remove', todo)"
+    />
   </div>
   <h2 v-else style="color:red; align-self: center">
     Todo list is empty
@@ -34,5 +31,4 @@ export default {
 </script>
 
 <style>
-
 </style>

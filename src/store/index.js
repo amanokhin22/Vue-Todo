@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import {todoModule} from "@/store/todoModule";
 import {addModal} from "@/store/addModal";
+import {editModal} from "@/store/editModal";
 
 export default createStore({
     state: {
@@ -8,6 +9,7 @@ export default createStore({
     },
     modules: {
         todo: todoModule,
-        addTodoModal: addModal
+        addTodoModal: addModal,
+        editModalStore: editModal
     }
 })

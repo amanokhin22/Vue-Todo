@@ -31,21 +31,8 @@ export const todoModule = {
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },
-        removeTodo(state, todo) {
-            state.todos = state.todos.filter(t => t.id !== todo.id)
-        },
-        toggleTodo(state, todo) {
-            const todoItem = state.todos.find(t => t.id === todo.id)
-            if (todoItem) {
-                todoItem.completed = !todoItem.completed
-            }
-        },
-        addTodo(state, todo) {
-            state.todos.push(todo);
-        },
     },
     actions: {
-
         async fetchTodos({commit}) {
             try {
                 commit('setLoading', true);
@@ -53,8 +40,7 @@ export const todoModule = {
                 commit('setTodos', response.data)
             } catch (e) {
                 console.log(e)
-            }
-            finally {
+            } finally {
                 commit('setLoading', false);
             }
         },
@@ -70,10 +56,10 @@ export const todoModule = {
             await axiosInstance.patch(`/${todo.id}`, {completed: !todo.completed});
             await dispatch('fetchTodos')
         },
-        async edit({dispatch}, todo) {
-            await axiosInstance.put(`/${todo.id}`, {title: !todo.title});
+        async updateTitle({dispatch}, todo) {
+            await axiosInstance.patch(`/${todo.id}`, {title: todo.title});
             await dispatch('fetchTodos')
         },
-     },
+    },
     namespaced: true
 }

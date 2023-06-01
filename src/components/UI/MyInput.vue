@@ -1,10 +1,10 @@
 <template>
-  <input
+  <textarea
       :value="modelValue"
       @input="updateInput"
       class="input"
       type="text"
-  >
+  />
 </template>
 
 <script>
